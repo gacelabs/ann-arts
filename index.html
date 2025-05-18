@@ -600,6 +600,10 @@
 			let touchEndX = 0;
 			let touchStartY = 0;
 			let touchEndY = 0;
+			let imgTouchStartX = 0;
+			let imgTouchEndX = 0;
+			let imgTouchStartY = 0;
+			let imgTouchEndY = 0;
 			let currentArtworkIndex = 0;
 			let isMobileView = window.innerWidth <= 768;
 
@@ -885,14 +889,24 @@
 				handleSwipeGesture();
 			}, false);
 
+			modalImage.addEventListener('touchstart', (e) => {
+				imgTouchStartX = e.changedTouches[0].screenX;
+				imgTouchStartY = e.changedTouches[0].screenY;
+			}, false);
+
 			modalImage.addEventListener('touchend', (e) => {
-				touchEndX = e.changedTouches[0].screenX;
-				touchEndY = e.changedTouches[0].screenY;
-				handleSwipeGesture(1);
+				imgTouchEndX = e.changedTouches[0].screenX;
+				imgTouchEndY = e.changedTouches[0].screenY;
+				let xDiff = imgTouchStartX - imgTouchEndX;
+				let yDiff = imgTouchStartY - imgTouchEndY;
+				if (yDiff > 70 && Math.abs(yDiff) > Math.abs(xDiff) && isImage) {
+					// Swipe up - close modal
+					closeModalFunc();
+				}
 			}, false);
 
 			// Handle swipe gestures
-			function handleSwipeGesture(isImage) {
+			function handleSwipeGesture() {
 				const xDiff = touchStartX - touchEndX;
 				const yDiff = touchStartY - touchEndY;
 
@@ -907,7 +921,7 @@
 					}
 				}
 				// Detect vertical swipe (up)
-				else if (yDiff > 70 && Math.abs(yDiff) > Math.abs(xDiff) && isImage) {
+				else if (yDiff > 70 && Math.abs(yDiff) > Math.abs(xDiff)) {
 					// Swipe up - close modal
 					closeModalFunc();
 				}
