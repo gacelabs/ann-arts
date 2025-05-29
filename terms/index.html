@@ -1,0 +1,1100 @@
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!-- <meta http-equiv="refresh" content="0;url=https://ann-art.space"> -->
+		<meta name="google-adsense-account" content="ca-pub-3716182521515143">
+		<title>Ann-Arts</title>
+		<style>
+			@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: 'Poppins', sans-serif;
+				/* background-color: #e0cffc; */
+				background: url(images/bg.jpg);
+				/* background-size: cover; */
+				/* Lilac color */
+				color: #333;
+				overflow-x: hidden;
+			}
+
+			.header {
+				padding: 2rem 0;
+				text-align: center;
+			}
+
+			.title {
+				font-size: 3rem;
+				font-weight: 700;
+				color: #ff6b6b;
+				text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+				margin-bottom: 0.5rem;
+			}
+
+			.subtitle {
+				font-size: 1.2rem;
+				font-weight: 300;
+				color: #2974af;
+			}
+
+			.menu-button {
+				position: fixed;
+				top: 20px;
+				left: 20px;
+				z-index: 100;
+				background: #ff6b6b;
+				color: white;
+				border: none;
+				border-radius: 50%;
+				width: 50px;
+				height: 50px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				cursor: pointer;
+				box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+				transition: all 0.3s ease;
+			}
+
+			.menu-button:hover {
+				background: #ff5252;
+			}
+
+			.menu {
+				position: fixed;
+				top: 0;
+				left: -300px;
+				width: 250px;
+				height: 100vh;
+				background: #fff;
+				z-index: 99;
+				padding: 80px 20px 20px;
+				box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+				transition: all 0.4s ease;
+			}
+
+			.menu.active {
+				left: 0;
+			}
+
+			.menu-overlay {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.5);
+				z-index: 98;
+				opacity: 0;
+				visibility: hidden;
+				transition: all 0.4s ease;
+			}
+
+			.menu-overlay.active {
+				opacity: 1;
+				visibility: visible;
+			}
+
+			.menu ul {
+				list-style: none;
+			}
+
+			.menu ul li {
+				margin: 20px 0;
+			}
+
+			.menu ul li a {
+				font-size: 1.2rem;
+				color: #333;
+				text-decoration: none;
+				transition: all 0.3s ease;
+			}
+
+			.menu ul li a:hover {
+				color: #ff6b6b;
+				padding-left: 10px;
+			}
+
+			.gallery {
+				/* max-width: 1200px; */
+				max-width: 840px;
+				margin: 0 auto;
+				padding: 20px;
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+				gap: 25px;
+			}
+
+			.drawing-card {
+				background: #f9f9f9;
+				border-radius: 10px;
+				overflow: hidden;
+				aspect-ratio: 1;
+				position: relative;
+				box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+				transition: all 0.3s ease;
+				cursor: pointer;
+			}
+
+			.drawing-card:hover {
+				transform: scale(1.03);
+				box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+			}
+
+			.drawing-card img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				display: block;
+			}
+
+			.drawing-title {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+				background: rgba(255, 255, 255, 0.9);
+				padding: 15px;
+				font-family: 'Caveat', cursive;
+				font-size: 1.5rem;
+				text-align: center;
+				transform: translateY(100%);
+				transition: all 0.3s ease;
+			}
+
+			.drawing-card:hover .drawing-title {
+				transform: translateY(0);
+			}
+
+			/* Modal styles */
+			.modal {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-color: rgba(0, 0, 0, 0.7);
+				z-index: 1000;
+				justify-content: center;
+				align-items: center;
+				overflow: hidden;
+			}
+
+			.modal-content {
+				background-color: white;
+				padding: 30px;
+				border-radius: 15px;
+				max-width: 600px;
+				width: 90%;
+				box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+				position: relative;
+				animation: modalFadeIn 0.3s ease-out;
+				transition: transform 0.3s ease;
+			}
+
+			@keyframes modalFadeIn {
+				from {
+					opacity: 0;
+					transform: translateY(-30px);
+				}
+
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+
+			.close-modal {
+				position: absolute;
+				right: 20px;
+				top: 15px;
+				font-size: 28px;
+				font-weight: bold;
+				cursor: pointer;
+				color: #ff0000;
+				transition: color 0.2s;
+				text-shadow: 0px 1px #000000;
+			}
+
+			.close-modal:hover {
+				color: #ff6b6b;
+			}
+
+			.modal-image {
+				width: 100%;
+				/* max-height: 350px; */
+				object-fit: cover;
+				border-radius: 10px;
+				margin-bottom: 20px;
+			}
+
+			.modal-title {
+				font-family: 'Caveat', cursive;
+				font-size: 2.5rem;
+				font-weight: 700;
+				/* margin-bottom: 15px; */
+				color: #ff6b6b;
+			}
+
+			.modal-description {
+				font-size: 1.1rem;
+				line-height: 1.6;
+				color: #555;
+			}
+
+			/* Navigation indicators */
+			.modal-nav {
+				display: none;
+				position: absolute;
+				padding-top: 15px;
+				left: 0;
+				width: 100%;
+				text-align: center;
+			}
+
+			.modal-nav-indicator {
+				/* display: inline-block; */
+				display: none;
+				width: 10px;
+				height: 10px;
+				border-radius: 50%;
+				background-color: #ddd;
+				margin: 0 5px;
+				transition: background-color 0.3s ease;
+			}
+
+			.modal-nav-indicator.active {
+				background-color: #ff6b6b;
+			}
+
+			/* Mobile swipe indicator */
+			.swipe-indicator {
+				display: none;
+				position: absolute;
+				width: 100%;
+				text-align: center;
+				color: #fff;
+				font-size: 0.9rem;
+				bottom: 10px;
+				opacity: 0.8;
+			}
+
+			@media (max-width: 768px) {
+				.gallery {
+					grid-template-columns: repeat(2, 1fr);
+					gap: 15px;
+				}
+
+				.title {
+					font-size: 2.5rem;
+				}
+
+				.menu-button {
+					width: 45px;
+					height: 45px;
+				}
+
+				.modal {
+					align-items: flex-end;
+					justify-content: center;
+				}
+
+				.modal-content {
+					width: 100%;
+					height: 95vh;
+					border-radius: 20px 20px 0 0;
+					padding: 25px 20px 60px;
+					overflow-y: auto;
+					margin-bottom: 0;
+				}
+
+				.modal-title {
+					font-size: 2rem;
+				}
+
+				.modal-nav {
+					display: block;
+				}
+
+				.swipe-indicator {
+					display: block;
+				}
+			}
+
+			@media (max-width: 480px) {
+				.gallery {
+					grid-template-columns: repeat(1, 1fr);
+				}
+
+				.title {
+					font-size: 2rem;
+				}
+
+				/* .modal-content {
+					padding: 20px 15px 60px;
+					height: 90vh;
+				}
+
+				.modal-image {
+					max-height: 250px;
+				} */
+			}
+
+			/* Animation classes for swipe transitions */
+			.slide-in-right {
+				animation: slideInRight 0.3s forwards;
+			}
+
+			.slide-out-left {
+				animation: slideOutLeft 0.3s forwards;
+			}
+
+			.slide-in-left {
+				animation: slideInLeft 0.3s forwards;
+			}
+
+			.slide-out-right {
+				animation: slideOutRight 0.3s forwards;
+			}
+
+			.slide-out-up {
+				animation: slideOutUp 0.3s forwards;
+			}
+
+			.hidden {
+				display: none;
+			}
+
+			.ad-sidebar {
+				width: 300px;
+				position: fixed;
+				top: 0;
+				bottom: 0;
+			}
+
+			.left-ad {
+				left: 0;
+			}
+
+			.right-ad {
+				right: 0;
+			}
+
+			.content-wrapper {
+				margin: 0 320px;
+				/* Leave space for side ads */
+			}
+
+			@media (max-width: 1024px) {
+				.ad-sidebar {
+					display: none;
+				}
+
+				.content-wrapper {
+					margin: 0;
+				}
+			}
+
+			@keyframes slideInRight {
+				from {
+					transform: translateX(100%);
+				}
+
+				to {
+					transform: translateX(0);
+				}
+			}
+
+			@keyframes slideOutLeft {
+				from {
+					transform: translateX(0);
+				}
+
+				to {
+					transform: translateX(-100%);
+				}
+			}
+
+			@keyframes slideInLeft {
+				from {
+					transform: translateX(-100%);
+				}
+
+				to {
+					transform: translateX(0);
+				}
+			}
+
+			@keyframes slideOutRight {
+				from {
+					transform: translateX(0);
+				}
+
+				to {
+					transform: translateX(100%);
+				}
+			}
+
+			@keyframes slideOutUp {
+				from {
+					transform: translateY(0);
+				}
+
+				to {
+					transform: translateY(-100%);
+				}
+			}
+		</style>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+		<!-- <script src="https://lib.youware.com/youware-lib.1747145198.js" id="yourware-lib"></script> -->
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3716182521515143" crossorigin="anonymous"></script>
+	</head>
+
+	<body>
+		<button class="menu-button" id="menuButton">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M3 12H21" stroke="white" stroke-width="2" stroke-linecap="round"></path>
+				<path d="M3 6H21" stroke="white" stroke-width="2" stroke-linecap="round"></path>
+				<path d="M3 18H21" stroke="white" stroke-width="2" stroke-linecap="round"></path>
+			</svg>
+		</button>
+
+		<div class="menu" id="menu">
+			<ul>
+				<li><a href="https://www.tiktok.com/@messy_artsyle" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a></li>
+				<li><a href="https://www.instagram.com/its.your_art_girl" target="_blank"><i class="fab fa-instagram"></i> Instagram</a></li>
+				<li><a href="https://www.facebook.com/li.an.955356" target="_blank"><i class="fab fa-facebook"></i> Facebook</a></li>
+				<!-- <li><a href="https://pinterest.com" target="_blank"><i class="fab fa-pinterest"></i> Pinterest</a></li> -->
+				<!-- <li><a href="https://behance.net" target="_blank"><i class="fab fa-behance"></i> Behance</a></li> -->
+			</ul>
+		</div>
+
+		<div class="menu-overlay" id="menuOverlay"></div>
+
+		<header class="header">
+			<h1 class="title">Ann-Arts</h1>
+			<p class="subtitle">Collection of my Artwork</p>
+		</header>
+
+		<main class="content-wrapper">
+			<!-- Left Ad -->
+			<div class="ad-sidebar left-ad">
+				<ins class="adsbygoogle" style="display:block; width:300px; height:600px" data-ad-client="ca-pub-3716182521515143"
+					data-ad-slot="7403645350" data-ad-format="rectangle" data-full-width-responsive="false"></ins>
+				<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+				</script>
+			</div>
+
+			<div class="">
+				<section data-bs-version="5.1" class="cid-u8GynFlsgK mt-5 pt-10 pb-0" id="header-title">
+					<div class="container">
+						<div class="row">
+							<div class="content-wrap col-12 col-md-12">
+								<h1 class="mbr-section-title mbr-fonts-style mbr-white mb-4 display-1">
+									<strong>Terms and Conditions</strong>
+								</h1>
+								<p class="mbr-fonts-style mbr-text mb-4 display-7">
+									These Terms and Conditions govern your use of <a href="https://ann-art.space/">Ann-Arts</a>
+									("Website"). By accessing or
+									using the Website, you agree to be bound by these Terms and Conditions. If you do not agree with any
+									part of these Terms
+									and Conditions, you must not use the Website.
+								</p>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<section data-bs-version="5.1" class="article4 cid-u8GynFkLmx pt-5">
+					<div class="container">
+						<div class="row justify-content-center">
+							<div class="col-12 col-md-12 col-lg">
+								<div class="text-wrapper align-left">
+									<ol class="mbr-section-title mbr-fonts-style mb-4 display-5">
+										<li>
+											<strong>Use of the Website</strong>
+											<ul class="mbr-text mbr-fonts-style mb-3 display-7">
+												<li>
+													You must be at least 13 years old to use this Website. By using the Website, you
+													represent that you are at least 13 years old. You are solely responsible for your
+													use of the Website and for any content you submit or share on the Website.
+												</li>
+											</ul>
+										</li>
+										<li>
+											<strong>Intellectual Property</strong>
+											<ul class="mbr-text mbr-fonts-style mb-3 display-7">
+												<li>
+													The content, design, and layout of this Website, including but not limited to text,
+													graphics, logos, images, and software, are owned by [Your Company Name] or its
+													licensors and are protected by copyright and other intellectual property laws. You
+													may not reproduce, modify, distribute, or republish any content from this Website
+													without prior written permission from us.
+												</li>
+											</ul>
+										</li>
+										<li>
+											<strong>User Accounts</strong>
+											<ul class="mbr-text mbr-fonts-style mb-3 display-7">
+												<li>
+													Some features of the Website may require you to create a user account. You are
+													responsible for maintaining the confidentiality of your account credentials and for
+													all activities that occur under your account. You agree to provide accurate and
+													complete information when creating your account and to update your information
+													promptly if it changes.
+												</li>
+											</ul>
+										</li>
+										<li>
+											<strong>Prohibited Activities</strong>
+											<ul class="mbr-text mbr-fonts-style mb-3 display-7">
+												<li>
+													You agree not to:
+													<ul class="mbr-text mbr-fonts-style mb-3 display-7">
+														<li>Use the Website in any way that violates any applicable laws or regulations.
+														</li>
+														<li>Impersonate any person or entity or falsely state or otherwise misrepresent
+															your affiliation with a person or entity.</li>
+														<li>Interfere with or disrupt the operation of the Website or the servers or
+															networks connected to the Website.</li>
+														<li>Attempt to gain unauthorized access to any part of the Website or any other
+															systems or networks connected to the Website.</li>
+													</ul>
+												</li>
+											</ul>
+										</li>
+										<li>
+											<strong>Limitation of Liability</strong>
+											<ul class="mbr-text mbr-fonts-style mb-3 display-7">
+												<li>
+													To the fullest extent permitted by law, we shall not be liable for any direct,
+													indirect, incidental, special, consequential, or punitive damages arising out of or
+													relating to your use of the Website or any content provided on the Website. This
+													includes, but is not limited to, damages for lost profits, lost data, or business
+													interruption, even if we have been advised of the possibility of such damages.
+												</li>
+											</ul>
+										</li>
+										<li>
+											<strong>Indemnification</strong>
+											<ul class="mbr-text mbr-fonts-style mb-3 display-7">
+												<li>
+													You agree to indemnify and hold harmless [Your Company Name] and its affiliates,
+													officers, directors, employees, agents, and licensors from and against any and all
+													claims, liabilities, damages, losses, costs, or expenses (including reasonable
+													attorneys' fees) arising out of or related to your use of the Website, any content
+													you submit or share on the Website, or your violation of these Terms and Conditions.
+												</li>
+											</ul>
+										</li>
+										<li>
+											<strong>Changes to These Terms and Conditions</strong>
+											<ul class="mbr-text mbr-fonts-style mb-3 display-7">
+												<li>
+													We reserve the right to update or change these Terms and Conditions at any time
+													without prior notice. Any changes will be effective immediately upon posting on this
+													page. Your continued use of the Website after any such changes constitutes your
+													acceptance of the new Terms and Conditions.
+												</li>
+											</ul>
+										</li>
+										<li>
+											<strong>Governing Law</strong>
+											<ul class="mbr-text mbr-fonts-style mb-3 display-7">
+												<li>
+													These Terms and Conditions shall be governed by and construed in accordance with the
+													laws of [Your Jurisdiction], without regard to its conflict of law principles.
+												</li>
+											</ul>
+										</li>
+										<li>
+											<strong>Contact Us</strong>
+											<ul class="mbr-text mbr-fonts-style mb-3 display-7">
+												<li>
+													If you have any questions or concerns about these Terms and Conditions, please
+													contact us at<br><a
+														href="mailto:lian-mae.garcia@gmail.com">lian-mae.garcia@gmail.com</a>
+												</li>
+											</ul>
+										</li>
+									</ol>
+									<p class="mbr-text mbr-fonts-style mb-3 display-7">
+										By using this Website, you agree to these Terms and Conditions. If you do not agree to these
+										Terms and Conditions, you
+										must not use the Website.
+									</p>
+									<p class="mbr-fonts-style mbr-text mb-4 display-7">
+										Effective Date: <strong>May 29, 2025</strong>
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<br><br>
+					<!-- In-article-ads -->
+					<ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article"
+						data-ad-format="fluid" data-ad-client="ca-pub-3716182521515143" data-ad-slot="6510513890"></ins>
+				</section>
+			</div>
+	
+			<!-- Right Ad -->
+			<div class="ad-sidebar right-ad">
+				<ins class="adsbygoogle" style="display:block; width:300px; height:600px" data-ad-client="ca-pub-3716182521515143"
+					data-ad-slot="2985444303" data-ad-format="rectangle" data-full-width-responsive="false"></ins>
+				<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+				</script>
+			</div>
+		</main>
+
+		<!-- Modal -->
+		<div class="modal" id="artModal" style="display: none;">
+			<div class="modal-content">
+				<span class="close-modal">×</span>
+				<img class="modal-image" src="images/2.jpg" alt="Artwork">
+				<h2 class="modal-title">Watercolor Sunset</h2>
+				<p class="modal-description">This delicate watercolor captures the serene beauty of a coastal sunset.
+					The blending of warm oranges and cool purples creates a dreamy atmosphere that evokes feelings of
+					peace and nostalgia.</p>
+				<div class="modal-nav" id="modalNav"></div>
+			</div>
+			<!-- <div class="swipe-indicator">
+				Swipe left/right to navigate • Swipe up to close
+			</div> -->
+		</div>
+
+		<section data-bs-version="5.1" class="footer2 p-5" once="footers" style="text-align: center;">
+			<div class="container">
+				<div class="row">
+					<div class="col-12 col-lg-6 center mt-2 mb-3">
+						<p class="mbr-fonts-style copyright mb-0 display-7">© <span class="year-value">2025</span> Toll
+							Calculator. All Rights Reserved.</p>
+					</div>
+					<div class="col-12 col-lg-6 center">
+						<div class="row-links mt-2 mb-3">
+							<ul class="row-links-soc">
+								<li class="row-links-soc-item mbr-fonts-style display-7">
+									<a href="/privacy/" class="text-white">Privacy Policy</a>
+								</li>
+								<li class="row-links-soc-item mbr-fonts-style display-7">
+									<a href="/terms/" class="text-white">Terms &amp; Conditions</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<script>
+			document.querySelector('.year-value').innerHTML = new Date().getFullYear();
+
+			async function fetchImageFilenames() {
+				try {
+					const response = await fetch('/list-images.php'); // URL to the PHP script
+					if (!response.ok) throw new Error('Failed to fetch');
+					const filenames = await response.json();
+					console.log('Image Filenames:', filenames);
+				} catch (error) {
+					console.error('Error:', error);
+				}
+			}
+
+			const menuButton = document.getElementById('menuButton');
+			const menu = document.getElementById('menu');
+			const menuOverlay = document.getElementById('menuOverlay');
+			const modal = document.getElementById('artModal');
+			const modalContent = document.querySelector('.modal-content');
+			const modalImage = document.querySelector('.modal-image');
+			const modalTitle = document.querySelector('.modal-title');
+			const modalDescription = document.querySelector('.modal-description');
+			const closeModal = document.querySelector('.close-modal');
+			const modalNav = document.getElementById('modalNav');
+
+			// Touch tracking variables
+			let touchStartX = 0;
+			let touchEndX = 0;
+			let touchStartY = 0;
+			let touchEndY = 0;
+			let imgTouchStartX = 0;
+			let imgTouchEndX = 0;
+			let imgTouchStartY = 0;
+			let imgTouchEndY = 0;
+			let currentArtworkIndex = 0;
+			let isMobileView = window.innerWidth <= 768;
+
+			// Artwork data
+			const artworks = [
+				{
+					id: 1,
+					title: "Digital Art",
+					// description: "A vibrant exploration of color and form, this abstract piece invites viewers to interpret its meaning through their own emotional response. Created using acrylic on canvas with bold brushstrokes and layered techniques.",
+					image: "images/1.jpg"
+				},
+				{
+					id: 2,
+					title: "Digital Art",
+					// description: "This delicate watercolor captures the serene beauty of a coastal sunset. The blending of warm oranges and cool purples creates a dreamy atmosphere that evokes feelings of peace and nostalgia.",
+					image: "images/2.jpg"
+				},
+				{
+					id: 3,
+					title: "Digital Art",
+					// description: "A precise and thoughtful composition exploring the relationship between different geometric shapes and patterns. This work demonstrates how mathematical concepts can create visually stunning artistic results.",
+					image: "images/3.jpg"
+				},
+				{
+					id: 4,
+					title: "Digital Art",
+					// description: "Created with traditional ink techniques, this atmospheric forest scene draws viewers into its mysterious depths. Each line and wash was carefully applied to capture the essence of a misty woodland.",
+					image: "images/4.jpg"
+				},
+				/* {
+					id: 5,
+					title: "Pencil Portrait",
+					// description: "This detailed botanical illustration combines scientific accuracy with artistic sensibility. The delicate linework highlights the natural beauty and structure of the flower, creating both an informative and aesthetically pleasing piece.",
+					image: "images/5.jpg"
+				},
+				{
+					id: 6,
+					title: "Botanical Art",
+					// description: "Using soft pastels on textured paper, this landscape captures the majesty of mountain ranges at dawn. The subtle color palette creates a sense of distance and atmosphere in this peaceful scene.",
+					image: "images/6.jpg"
+				},
+				{
+					id: 7,
+					title: "Pencil Portrait",
+					// description: "This hypnotic piece explores concepts of infinity and motion through its spiraling forms. The precision of the linework creates an optical illusion that seems to pull the viewer into its center.",
+					image: "images/7.jpg"
+				},
+				{
+					id: 8,
+					title: "Pencil Portrait",
+					// description: "This meticulously rendered graphite portrait demonstrates exceptional technical skill. The artist has captured not just the physical likeness but also a sense of the subject's inner character through careful attention to expression and detail.",
+					image: "images/8.jpg"
+				},
+				{
+					id: 9,
+					title: "Ballpen Portrait",
+					// description: "This dramatic charcoal portrait uses light and shadow to create a powerful emotional impact. The contrast between dark and light areas highlights the subject's features and creates a timeless, elegant feel.",
+					image: "images/9.jpg"
+				},
+				{
+					id: 10,
+					title: "Pencil Portrait",
+					// description: "This dramatic charcoal portrait uses light and shadow to create a powerful emotional impact. The contrast between dark and light areas highlights the subject's features and creates a timeless, elegant feel.",
+					image: "images/10.jpg"
+				},
+				{
+					id: 11,
+					title: "Natural Drawing",
+					// description: "This dramatic charcoal portrait uses light and shadow to create a powerful emotional impact. The contrast between dark and light areas highlights the subject's features and creates a timeless, elegant feel.",
+					image: "images/11.jpg"
+				},
+				{
+					id: 12,
+					title: "Art Contest Drawing",
+					// description: "This dramatic charcoal portrait uses light and shadow to create a powerful emotional impact. The contrast between dark and light areas highlights the subject's features and creates a timeless, elegant feel.",
+					image: "images/12.jpg"
+				},
+				{
+					id: 13,
+					title: "Ballpen Portrait",
+					// description: "This dramatic charcoal portrait uses light and shadow to create a powerful emotional impact. The contrast between dark and light areas highlights the subject's features and creates a timeless, elegant feel.",
+					image: "images/13.jpg"
+				}, */
+				{
+					id: 14,
+					title: "Charcoal Drawing",
+					// description: "This dramatic charcoal portrait uses light and shadow to create a powerful emotional impact. The contrast between dark and light areas highlights the subject's features and creates a timeless, elegant feel.",
+					image: "images/14.jpg"
+				},
+				{
+					id: 15,
+					title: "Charcoal Drawing",
+					// description: "This dramatic charcoal portrait uses light and shadow to create a powerful emotional impact. The contrast between dark and light areas highlights the subject's features and creates a timeless, elegant feel.",
+					image: "images/15.jpg"
+				},
+				{
+					id: 16,
+					title: "Charcoal Drawing",
+					// description: "This dramatic charcoal portrait uses light and shadow to create a powerful emotional impact. The contrast between dark and light areas highlights the subject's features and creates a timeless, elegant feel.",
+					image: "images/16.jpg"
+				},
+				{
+					id: 17,
+					title: "Detailed Portrait",
+					// description: "This dramatic charcoal portrait uses light and shadow to create a powerful emotional impact. The contrast between dark and light areas highlights the subject's features and creates a timeless, elegant feel.",
+					image: "images/17.jpg"
+				},
+				{
+					id: 18,
+					title: "Comic Art",
+					// description: "This dramatic charcoal portrait uses light and shadow to create a powerful emotional impact. The contrast between dark and light areas highlights the subject's features and creates a timeless, elegant feel.",
+					image: "images/18.jpg"
+				},
+				{
+					id: 19,
+					title: "Detailed Portrait",
+					// description: "This dramatic charcoal portrait uses light and shadow to create a powerful emotional impact. The contrast between dark and light areas highlights the subject's features and creates a timeless, elegant feel.",
+					image: "images/19.jpg"
+				},
+				{
+					id: 20,
+					title: "Detailed Portrait",
+					// description: "This dramatic charcoal portrait uses light and shadow to create a powerful emotional impact. The contrast between dark and light areas highlights the subject's features and creates a timeless, elegant feel.",
+					image: "images/20.jpg"
+				},
+				{
+					id: 21,
+					title: "Digital Art",
+					// description: "This dramatic charcoal portrait uses light and shadow to create a powerful emotional impact. The contrast between dark and light areas highlights the subject's features and creates a timeless, elegant feel.",
+					image: "images/21.jpg"
+				},
+				/* {
+					id: 22,
+					title: "Charcoal Drawing",
+					// description: "This dramatic charcoal portrait uses light and shadow to create a powerful emotional impact. The contrast between dark and light areas highlights the subject's features and creates a timeless, elegant feel.",
+					image: "images/22.jpg"
+				}, */
+				{
+					id: 23,
+					title: "Digital Sketch",
+					// description: "This dramatic charcoal portrait uses light and shadow to create a powerful emotional impact. The contrast between dark and light areas highlights the subject's features and creates a timeless, elegant feel.",
+					image: "images/23.jpg"
+				},
+				{
+					id: 24,
+					title: "Digital Art",
+					// description: "This dramatic charcoal portrait uses light and shadow to create a powerful emotional impact. The contrast between dark and light areas highlights the subject's features and creates a timeless, elegant feel.",
+					image: "images/24.jpg"
+				},
+				{
+					id: 25,
+					title: "Digital Art",
+					// description: "This dramatic charcoal portrait uses light and shadow to create a powerful emotional impact. The contrast between dark and light areas highlights the subject's features and creates a timeless, elegant feel.",
+					image: "images/25.jpg"
+				},
+				{
+					id: 26,
+					title: "Digital Art",
+					// description: "This dramatic charcoal portrait uses light and shadow to create a powerful emotional impact. The contrast between dark and light areas highlights the subject's features and creates a timeless, elegant feel.",
+					image: "images/26.jpg"
+				},
+				{
+					id: 27,
+					title: "Digital Art",
+					// description: "This dramatic charcoal portrait uses light and shadow to create a powerful emotional impact. The contrast between dark and light areas highlights the subject's features and creates a timeless, elegant feel.",
+					image: "images/27.jpg"
+				},
+				{
+					id: 28,
+					title: "Digital Art",
+					// description: "This dramatic charcoal portrait uses light and shadow to create a powerful emotional impact. The contrast between dark and light areas highlights the subject's features and creates a timeless, elegant feel.",
+					image: "images/28.jpg"
+				}
+			];
+
+			// Create navigation indicators for mobile
+			function createNavIndicators() {
+				modalNav.innerHTML = '';
+				artworks.forEach((artwork, index) => {
+					const indicator = document.createElement('span');
+					indicator.classList.add('modal-nav-indicator');
+					if (index === currentArtworkIndex) {
+						indicator.classList.add('active');
+					}
+					modalNav.appendChild(indicator);
+				});
+			}
+
+			// Menu toggle
+			menuButton.addEventListener('click', () => {
+				menu.classList.toggle('active');
+				menuOverlay.classList.toggle('active');
+			});
+
+			menuOverlay.addEventListener('click', () => {
+				menu.classList.remove('active');
+				menuOverlay.classList.remove('active');
+			});
+
+			// Update modal with current artwork
+			function updateModalContent(index, direction = null) {
+				const artwork = artworks[index];
+
+				if (direction && isMobileView) {
+					// Add animation classes based on swipe direction
+					modalContent.classList.add(direction === 'next' ? 'slide-in-right' : 'slide-in-left');
+
+					// Remove animation classes after transition completes
+					setTimeout(() => {
+						modalContent.classList.remove('slide-in-right', 'slide-in-left', 'slide-out-left', 'slide-out-right');
+					}, 300);
+				}
+
+				modalImage.src = artwork.image;
+				modalTitle.textContent = artwork.title;
+				modalDescription.textContent = artwork.description;
+
+				if (isMobileView) {
+					// Update navigation indicators
+					const indicators = modalNav.querySelectorAll('.modal-nav-indicator');
+					indicators.forEach((indicator, i) => {
+						indicator.classList.toggle('active', i === index);
+					});
+				}
+			}
+
+			// Show next artwork
+			function showNextArtwork() {
+				if (isMobileView) {
+					modalContent.classList.add('slide-out-left');
+				}
+
+				setTimeout(() => {
+					currentArtworkIndex = (currentArtworkIndex + 1) % artworks.length;
+					updateModalContent(currentArtworkIndex, 'next');
+				}, isMobileView ? 150 : 0);
+			}
+
+			// Show previous artwork
+			function showPrevArtwork() {
+				if (isMobileView) {
+					modalContent.classList.add('slide-out-right');
+				}
+
+				setTimeout(() => {
+					currentArtworkIndex = (currentArtworkIndex - 1 + artworks.length) % artworks.length;
+					updateModalContent(currentArtworkIndex, 'prev');
+				}, isMobileView ? 150 : 0);
+			}
+
+			// Close the modal
+			function closeModalFunc() {
+				if (isMobileView) {
+					modalContent.classList.add('slide-out-up');
+					setTimeout(() => {
+						modal.style.display = 'none';
+						document.body.style.overflow = 'auto';
+						modalContent.classList.remove('slide-out-up');
+					}, 300);
+				} else {
+					modal.style.display = 'none';
+					document.body.style.overflow = 'auto';
+				}
+			}
+
+			// Modal functionality
+			document.querySelectorAll('.drawing-card').forEach(card => {
+				card.addEventListener('click', () => {
+					const artId = parseInt(card.dataset.id);
+					const artworkIndex = artworks.findIndex(art => art.id === artId);
+
+					if (artworkIndex !== -1) {
+						currentArtworkIndex = artworkIndex;
+						updateModalContent(currentArtworkIndex);
+
+						if (isMobileView) {
+							createNavIndicators();
+						}
+
+						modal.style.display = 'flex';
+						document.body.style.overflow = 'hidden';
+					}
+				});
+			});
+
+			// Touch event handlers for mobile swipe
+			modalContent.addEventListener('touchstart', (e) => {
+				touchStartX = e.changedTouches[0].screenX;
+				touchStartY = e.changedTouches[0].screenY;
+			}, false);
+
+			modalContent.addEventListener('touchend', (e) => {
+				touchEndX = e.changedTouches[0].screenX;
+				touchEndY = e.changedTouches[0].screenY;
+				handleSwipeGesture();
+			}, false);
+
+			modalImage.addEventListener('touchstart', (e) => {
+				imgTouchStartX = e.changedTouches[0].screenX;
+				imgTouchStartY = e.changedTouches[0].screenY;
+			}, false);
+
+			modalImage.addEventListener('touchend', (e) => {
+				imgTouchEndX = e.changedTouches[0].screenX;
+				imgTouchEndY = e.changedTouches[0].screenY;
+				let xDiff = imgTouchStartX - imgTouchEndX;
+				let yDiff = imgTouchStartY - imgTouchEndY;
+				if (yDiff > 70 && Math.abs(yDiff) > Math.abs(xDiff) && isImage) {
+					// Swipe up - close modal
+					closeModalFunc();
+				}
+			}, false);
+
+			// Handle swipe gestures
+			function handleSwipeGesture() {
+				const xDiff = touchStartX - touchEndX;
+				const yDiff = touchStartY - touchEndY;
+
+				// Detect horizontal swipe (left/right)
+				if (Math.abs(xDiff) > Math.abs(yDiff) && Math.abs(xDiff) > 50) {
+					if (xDiff > 0) {
+						// Swipe left - next artwork
+						showNextArtwork();
+					} else {
+						// Swipe right - previous artwork
+						showPrevArtwork();
+					}
+				}
+				// Detect vertical swipe (up)
+				else if (yDiff > 70 && Math.abs(yDiff) > Math.abs(xDiff)) {
+					// Swipe up - close modal
+					closeModalFunc();
+				}
+			}
+
+			// Update mobile view status on window resize
+			window.addEventListener('resize', () => {
+				isMobileView = window.innerWidth <= 768;
+			});
+
+			// Close modal
+			closeModal.addEventListener('click', closeModalFunc);
+
+			// Close modal when clicking outside
+			window.addEventListener('click', (e) => {
+				if (e.target === modal) {
+					closeModalFunc();
+				}
+			});
+
+			// Close modal with Escape key
+			window.addEventListener('keydown', (e) => {
+				if (e.key === 'Escape' && modal.style.display === 'flex') {
+					closeModalFunc();
+				}
+
+				// Navigate with arrow keys
+				if (modal.style.display === 'flex') {
+					if (e.key === 'ArrowRight') {
+						showNextArtwork();
+					} else if (e.key === 'ArrowLeft') {
+						showPrevArtwork();
+					}
+				}
+			});
+		</script>
+	</body>
+
+</html>
